@@ -1,0 +1,12 @@
+# Ignorar el entorno virtual
+venv/
+
+# Ignorar los archivos de compilación de Python
+*.pyc
+__pycache__/
+
+# Ignorar node_modules (si usas React en el frontend)
+client/node_modules/
+
+# Ignorar archivos de configuración locales
+.env

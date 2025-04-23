@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'coreapi',
     'products',
+    'rest_framework_simplejwt',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -73,6 +75,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'django_back_api.wsgi.application'
+AUTH_USER_MODEL = 'accounts.CustomUser'  # Asegúrate de que 'accounts' sea el nombre correcto de tu app
+
+
 
 
 # Database
@@ -80,8 +85,12 @@ WSGI_APPLICATION = 'django_back_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'product',
+        'USER': 'santi',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -134,4 +143,7 @@ CORS_ALLOWED_ORIGINS = ["http://localhost:5173",
 REST_FRAMEWORK = {
     ...: ...,
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
+      'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }

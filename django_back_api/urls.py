@@ -3,5 +3,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('products.urls')),  # Se quitó el prefijo "products/" para evitar URLs repetitivas
+    path('api/', include('accounts.urls')),  # Aquí aseguramos que las URLs de la app 'accounts' están siendo incluidas
+    path('', include('products.urls')),  # Esto debe ser para la app de productos
 ]

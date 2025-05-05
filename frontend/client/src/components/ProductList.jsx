@@ -56,6 +56,12 @@ export function ProductList() {
               >
                 Eliminar
               </button>
+              <button
+                onClick={() => navigate(`/product-exit-report/${product.id}`)} // Navegar a la salida de productos con el id
+                className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition"
+              >
+                Salida
+              </button>
             </div>
           </div>
         ))}

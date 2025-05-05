@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const API_URL = 'http://127.0.0.1:8000/products/';
 
 export async function createProduct(productData) {
@@ -43,27 +41,3 @@ export async function deleteProduct(id) {
   if (!response.ok) throw new Error('Error al eliminar producto');
   return response.status;
 }
-
-export async function updateProductStock(productId, newStock, originalProduct) {
-  try {
-    const updatedProduct = {
-      ...originalProduct,
-      stock_quantity: newStock,
-      expiration_date: originalProduct.expiration_date || null, // Aseguramos que esté definido
-    };
-
-    const response = await axios.put(`${API_URL}${productId}/`, updatedProduct);
-    return response.data;  // Retornamos la respuesta actualizada
-  } catch (error) {
-    if (error.response) {
-      console.error("Error detallado del backend:", error.response.data);
-    } else if (error.request) {
-      console.error("No hubo respuesta del servidor:", error.request);
-    } else {
-      console.error("Error al configurar la solicitud:", error.message);
-    }
-    throw new Error("Error al actualizar producto");
-  }
-}
-
-

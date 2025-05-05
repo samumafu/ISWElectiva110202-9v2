@@ -4,8 +4,6 @@ import { ProductList } from "./components/ProductList";
 import { Dashboard } from "./pages/Dashboard";
 import { Navigation } from "./components/Navigation";
 import NotFound from './pages/NotFound';
-import { Settings } from './pages/Settings';
-import { ProductExitReport } from "./components/ProductExitReport";
 
 
 function App() {
@@ -19,8 +17,6 @@ function App() {
                 <Route path="/add-product" element={<ProductFormPage />} />
                 <Route path="/edit-product/:id" element={<ProductFormPage/>}/>
                 <Route path="*" element={<NotFound />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/product-exit-report/:productId" element={<ProductExitReport />} />
             </Routes>
         </BrowserRouter>
     );

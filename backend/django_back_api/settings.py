@@ -86,9 +86,9 @@ AUTH_USER_MODEL = 'accounts.CustomUser'  # Asegúrate de que 'accounts' sea el n
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'product',
-        'USER': 'santi',
-        'PASSWORD': '123',
+        'NAME': 'products',
+        'USER': 'isamu',
+        'PASSWORD': 'Samumafuuff314.',
         'HOST': 'localhost',
         'PORT': '5432',
     }

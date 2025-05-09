@@ -91,6 +91,9 @@ export function Dashboard() {
         <Link to="/settings" className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-lg shadow transition">
           ⚙️ Configuración
         </Link>
+        <Link to="/Report" className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-lg shadow transition">
+          ⚙️ Informes
+        </Link>
       </div>
 
       <div className="mt-10">

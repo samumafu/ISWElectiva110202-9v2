@@ -7,7 +7,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-# Usa el valor real de ALLOWED_HOSTS desde .env o como lista fija para producción
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default=['localhost'])
 
 INSTALLED_APPS = [
@@ -22,7 +21,7 @@ INSTALLED_APPS = [
     'coreapi',
     'products',
     'rest_framework_simplejwt',
-    'accounts'
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +40,8 @@ ROOT_URLCONF = 'django_back_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # Aquí indicamos que Django busque templates (index.html) en frontend_build
+        'DIRS': [os.path.join(BASE_DIR, 'frontend_build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -79,25 +79,19 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ============================
-# STATIC FILES CONFIGURATION
-# ============================
-
 STATIC_URL = '/static/'
 
-# Aquí apunta a la carpeta donde se construirá React con vite
+# Aquí la carpeta donde el build de React crea los archivos estáticos
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend_build'),
 ]
 
-# Carpeta donde se recopilan los estáticos para producción (collectstatic)
+# Carpeta para collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# CORS configuración
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv(), default=[])
-
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': "rest_framework.schemas.coreapi.AutoSchema",

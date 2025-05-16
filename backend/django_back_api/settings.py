@@ -7,6 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Usa el valor real de ALLOWED_HOSTS desde .env o como lista fija para producción
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default=['localhost'])
 
 INSTALLED_APPS = [
@@ -21,7 +22,7 @@ INSTALLED_APPS = [
     'coreapi',
     'products',
     'rest_framework_simplejwt',
-    'accounts',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -37,13 +38,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_back_api.urls'
 
-# Ruta absoluta al frontend build (fuera de django_back_api)
-FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, 'frontend_build')
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [FRONTEND_BUILD_DIR],  # Aquí irá el index.html del frontend
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,31 +79,25 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ========================================
+# ============================
 # STATIC FILES CONFIGURATION
-# ========================================
+# ============================
 
 STATIC_URL = '/static/'
 
-# Esta carpeta debe existir: /backend/frontend_build
+# Aquí apunta a la carpeta donde se construirá React con vite
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend_build'),
 ]
 
-# Carpeta a donde collectstatic copiará archivos (para producción)
+# Carpeta donde se recopilan los estáticos para producción (collectstatic)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ========================================
-# CORS
-# ========================================
-
+# CORS configuración
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv(), default=[])
 
-# ========================================
-# REST Framework
-# ========================================
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': "rest_framework.schemas.coreapi.AutoSchema",

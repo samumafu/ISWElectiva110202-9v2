@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'  // mantenemos tu plugin de tailwind
+import tailwindcss from '@tailwindcss/vite'  // si lo tienes instalado
+
 import path from 'path'
 
 export default defineConfig({
@@ -15,7 +16,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../../backend/frontend_build'),
+    outDir: '../../backend/frontend_build',
     emptyOutDir: true,
   },
   resolve: {

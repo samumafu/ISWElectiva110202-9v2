@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Usa el valor real de ALLOWED_HOSTS desde .env o como lista fija para producción
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default=['localhost'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',

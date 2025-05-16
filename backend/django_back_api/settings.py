@@ -40,8 +40,7 @@ ROOT_URLCONF = 'django_back_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # Aquí indicamos que Django busque templates (index.html) en frontend_build
-        'DIRS': [os.path.join(BASE_DIR, 'frontend_build')],
+        'DIRS': [os.path.join(BASE_DIR, 'frontend_build')],  # ✅ importante
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

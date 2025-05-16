@@ -9,7 +9,7 @@ __pycache__/
 client/node_modules/
 
 # Ignorar archivos de configuración locales
-.env
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

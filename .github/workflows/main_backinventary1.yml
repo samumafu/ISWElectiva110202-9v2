@@ -20,43 +20,29 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Clean node_modules and lockfile
-        run: |
-          cd frontend/client
-          rm -rf node_modules package-lock.json
-
-      - name: Install frontend dependencies and build
+      - name: Build frontend with Vite
         run: |
           cd frontend/client
           npm install --legacy-peer-deps
           npm run build
+          mkdir -p ../../backend/frontend_build
+          cp -r dist/* ../../backend/frontend_build/
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Create and activate virtual environment
+      - name: Install backend dependencies and collect static files
         run: |
           python -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
-
-      - name: Install backend dependencies
-        run: |
-          source venv/bin/activate
           pip install -r backend/requirements.txt
-
-      # COPIA tu .env a la carpeta backend para que Django lo lea con python-decouple
-      - name: Copy .env to backend directory
-        run: |
           cp .env backend/.env
-
-      - name: Collect static files
-        run: |
-          source venv/bin/activate
           cd backend
           python manage.py collectstatic --noinput
+          python manage.py migrate
 
       - name: Zip artifact for deployment
         run: |

@@ -96,10 +96,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS configuración
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # frontend local vite dev server
-    f"https://{ALLOWED_HOSTS[0]}"  # producción con el primer host configurado
-]
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv(), default=[])
+
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': "rest_framework.schemas.coreapi.AutoSchema",

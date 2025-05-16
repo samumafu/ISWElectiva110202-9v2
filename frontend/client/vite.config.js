@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from '@tailwindcss/vite'  // si lo tienes instalado
 
-// https://vite.dev/config/
+import path from 'path'
+
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
@@ -10,8 +11,17 @@ export default defineConfig({
       '/api/v1': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        secure: false
-      }
-    }
-  }
+        secure: false,
+      },
+    },
+  },
+  build: {
+    outDir: '../../backend/frontend_build',
+    emptyOutDir: true,
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 })

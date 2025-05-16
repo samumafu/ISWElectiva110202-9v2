@@ -37,10 +37,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'django_back_api.urls'
 
+# Ruta absoluta al frontend build (fuera de django_back_api)
+FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, 'frontend_build')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'frontend_build')],  # ✅ importante
+        'DIRS': [FRONTEND_BUILD_DIR],  # Aquí irá el index.html del frontend
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,19 +81,31 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# ========================================
+# STATIC FILES CONFIGURATION
+# ========================================
+
 STATIC_URL = '/static/'
 
-# Aquí la carpeta donde el build de React crea los archivos estáticos
+# Esta carpeta debe existir: /backend/frontend_build
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend_build'),
 ]
 
-# Carpeta para collectstatic
+# Carpeta a donde collectstatic copiará archivos (para producción)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ========================================
+# CORS
+# ========================================
+
 CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', cast=Csv(), default=[])
+
+# ========================================
+# REST Framework
+# ========================================
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': "rest_framework.schemas.coreapi.AutoSchema",

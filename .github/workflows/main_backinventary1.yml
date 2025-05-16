@@ -15,39 +15,61 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Configurar Node.js para frontend
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Build frontend with Vite
+      # Limpieza completa para evitar error de rollup
+      - name: Clean node_modules, lockfile and npm cache (rollup fix)
         run: |
           cd frontend/client
-          npm install --legacy-peer-deps
-          npm run build
-          mkdir -p ../../backend/frontend_build
-          cp -r dist/* ../../backend/frontend_build/
+          rm -rf node_modules package-lock.json
+          npm cache clean --force
 
-      - name: Set up Python
+      # Instalar y construir el frontend
+      - name: Install frontend dependencies and build
+        run: |
+          cd frontend/client
+          npm install --force
+          npm run build
+
+      # Configurar Python
+      - name: Set up Python version
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
-      - name: Install backend dependencies and collect static files
+      - name: Create and activate virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
+
+      - name: Install backend dependencies
+        run: |
+          source venv/bin/activate
           pip install -r backend/requirements.txt
+
+      # Copiar el archivo .env al backend para usar python-decouple
+      - name: Copy .env to backend directory
+        run: |
           cp .env backend/.env
+
+      # Collect static files
+      - name: Collect static files
+        run: |
+          source venv/bin/activate
           cd backend
           python manage.py collectstatic --noinput
-          python manage.py migrate
 
+      # Comprimir archivos para despliegue
       - name: Zip artifact for deployment
         run: |
           zip -r release.zip backend staticfiles
 
+      # Subir artefacto para el job de deploy
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:

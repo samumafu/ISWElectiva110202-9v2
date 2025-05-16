@@ -20,6 +20,11 @@ jobs:
         with:
           node-version: '20'  # usa la versión que necesites
 
+      - name: Clean node_modules and lockfile  # 🔧 Paso agregado para evitar error de rollup
+        run: |
+          cd frontend/client
+          rm -rf node_modules package-lock.json
+
       - name: Install frontend dependencies and build
         run: |
           cd frontend/client

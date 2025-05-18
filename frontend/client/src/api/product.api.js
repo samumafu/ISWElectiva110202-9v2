@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/products/';
+// ✅ Usamos variable de entorno para que funcione en dev y producción
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export async function createProduct(productData) {
-  const response = await fetch(API_URL, {
+  const response = await fetch(`${BASE_URL}/products/`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -14,18 +15,18 @@ export async function createProduct(productData) {
 }
 
 export async function getAllProducts() {
-  const response = await fetch(API_URL);
+  const response = await fetch(`${BASE_URL}/products/`);
   return await response.json();
 }
 
 export async function getProductById(id) {
-  const response = await fetch(`${API_URL}${id}/`);
+  const response = await fetch(`${BASE_URL}/products/${id}/`);
   if (!response.ok) throw new Error('Producto no encontrado');
   return await response.json();
 }
 
 export async function updateProduct(id, productData) {
-  const response = await fetch(`${API_URL}${id}/`, {
+  const response = await fetch(`${BASE_URL}/products/${id}/`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ export async function updateProduct(id, productData) {
 }
 
 export async function deleteProduct(id) {
-  const response = await fetch(`${API_URL}${id}/`, {
+  const response = await fetch(`${BASE_URL}/products/${id}/`, {
     method: 'DELETE',
   });
   if (!response.ok) throw new Error('Error al eliminar producto');
@@ -49,11 +50,11 @@ export async function updateProductStock(productId, newStock, originalProduct) {
     const updatedProduct = {
       ...originalProduct,
       stock_quantity: newStock,
-      expiration_date: originalProduct.expiration_date || null, // Aseguramos que esté definido
+      expiration_date: originalProduct.expiration_date || null,
     };
 
-    const response = await axios.put(`${API_URL}${productId}/`, updatedProduct);
-    return response.data;  // Retornamos la respuesta actualizada
+    const response = await axios.put(`${BASE_URL}/products/${productId}/`, updatedProduct);
+    return response.data;
   } catch (error) {
     if (error.response) {
       console.error("Error detallado del backend:", error.response.data);
@@ -65,5 +66,3 @@ export async function updateProductStock(productId, newStock, originalProduct) {
     throw new Error("Error al actualizar producto");
   }
 }
-
-

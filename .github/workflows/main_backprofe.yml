@@ -28,9 +28,6 @@ jobs:
           pip install --upgrade pip
           pip install -r backend/requirements.txt
 
-      - name: Copy .env to backend directory
-        run: cp .env backend/.env
-
       - name: Collect static files
         run: |
           source venv/bin/activate
@@ -68,7 +65,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'backprofe'  # Tu App Service backend
+          app-name: 'backprofe'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8B0C1ED7686042899361D546B9718EBA }}
           package: .

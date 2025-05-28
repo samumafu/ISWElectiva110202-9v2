@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000/products/';
+// Usamos variable de entorno o fallback a localhost solo en desarrollo
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+const API_URL = `${API_BASE_URL}/products/`;
 
 export async function createProduct(productData) {
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(productData),
   });
   return await response.json();
@@ -27,9 +27,7 @@ export async function getProductById(id) {
 export async function updateProduct(id, productData) {
   const response = await fetch(`${API_URL}${id}/`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(productData),
   });
   if (!response.ok) throw new Error('Error al actualizar producto');
@@ -37,9 +35,7 @@ export async function updateProduct(id, productData) {
 }
 
 export async function deleteProduct(id) {
-  const response = await fetch(`${API_URL}${id}/`, {
-    method: 'DELETE',
-  });
+  const response = await fetch(`${API_URL}${id}/`, { method: 'DELETE' });
   if (!response.ok) throw new Error('Error al eliminar producto');
   return response.status;
 }
@@ -49,11 +45,11 @@ export async function updateProductStock(productId, newStock, originalProduct) {
     const updatedProduct = {
       ...originalProduct,
       stock_quantity: newStock,
-      expiration_date: originalProduct.expiration_date || null, // Aseguramos que esté definido
+      expiration_date: originalProduct.expiration_date || null,
     };
 
     const response = await axios.put(`${API_URL}${productId}/`, updatedProduct);
-    return response.data;  // Retornamos la respuesta actualizada
+    return response.data;
   } catch (error) {
     if (error.response) {
       console.error("Error detallado del backend:", error.response.data);

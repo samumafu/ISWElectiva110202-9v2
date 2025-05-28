@@ -92,7 +92,7 @@ export function Dashboard() {
           ⚙️ Configuración
         </Link>
         <Link to="/Report" className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-lg shadow transition">
-          ⚙️ Informes
+          📑 Informes
         </Link>
       </div>
 

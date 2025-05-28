@@ -38,13 +38,11 @@ jobs:
       - name: Copy .env.production to client
         run: cp frontend/client/.env.production frontend/client/.env
 
-      # NEW STEP: Limpiar node_modules y package-lock.json antes de instalar
       - name: Clean dependencies
         run: |
           cd frontend/client
           rm -rf node_modules package-lock.json
 
-      # NEW STEP: Instalar dependencias limpias forzando instalación
       - name: Install dependencies
         run: |
           cd frontend/client

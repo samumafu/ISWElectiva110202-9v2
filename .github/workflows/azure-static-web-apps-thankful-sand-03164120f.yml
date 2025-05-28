@@ -35,8 +35,7 @@ jobs:
             return await coredemo.getIDToken()
           result-encoding: string
 
-      # 🔧 Este paso es el único cambio necesario y seguro:
-      - name: Copy .env.production to .env
+      - name: Copy .env.production to client
         run: cp frontend/client/.env.production frontend/client/.env
 
       - name: Build And Deploy
@@ -45,7 +44,7 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_THANKFUL_SAND_03164120F }}
           action: "upload"
-          app_location: "./frontend/client"
+          app_location: "./client"
           api_location: ""
           output_location: "dist"
           github_id_token: ${{ steps.idtoken.outputs.result }}

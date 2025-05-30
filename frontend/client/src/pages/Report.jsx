@@ -5,7 +5,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const Report = () => {
   const [data, setData] = useState([]);
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+  const backendURL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 
   useEffect(() => {
     axios.get(`${backendURL}/report/`)
